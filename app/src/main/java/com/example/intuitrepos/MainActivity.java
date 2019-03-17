@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.intuitrepos.Dto.Repo;
+import com.example.intuitrepos.databinding.RepoRowBinding;
 
 import java.util.List;
 
@@ -49,12 +49,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public ViewHolderRepo onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
                         View view = getLayoutInflater().inflate(R.layout.repo_row, viewGroup, false);
-                        return new ViewHolderRepo(view);
+
+                        RepoRowBinding repoRowBinding = RepoRowBinding.inflate(getLayoutInflater(), viewGroup, false);
+
+                        return new ViewHolderRepo(repoRowBinding);
                     }
 
                     @Override
                     public void onBindViewHolder(@NonNull ViewHolderRepo viewHolderRepo, int i) {
-                        viewHolderRepo.bind(i);
+                        viewHolderRepo.bind(repoList.get(i));
                     }
 
                     @Override
@@ -70,26 +73,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private class ViewHolderRepo extends RecyclerView.ViewHolder {
-        private final TextView repoName;
-        private final TextView repoDesc;
 
-        public ViewHolderRepo(@NonNull View itemView) {
-            super(itemView);
 
-            repoName = itemView.findViewById(R.id.repoName);
-            repoDesc = itemView.findViewById(R.id.repoDesc);
+        private RepoRowBinding repoRowBinding;
 
+        public ViewHolderRepo(@NonNull RepoRowBinding repoRowBinding) {
+            super(repoRowBinding.getRoot());
+            this.repoRowBinding = repoRowBinding;
         }
 
-        public void bind(int position) {
+        public void bind(Repo repo) {
 
-            Repo repo = repoList.get(position);
-            repoName.setText(repo.getFullName());
-            repoDesc.setText(repo.getDescription());
+          repoRowBinding.setRepo(repo);
+          repoRowBinding.executePendingBindings();
 
         }
     }
