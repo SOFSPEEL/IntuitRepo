@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.repos);
 
         RepoApplication app = (RepoApplication) getApplication();
 
@@ -75,17 +75,22 @@ public class MainActivity extends AppCompatActivity {
 
     private class ViewHolderRepo extends RecyclerView.ViewHolder {
         private final TextView repoName;
+        private final TextView repoDesc;
 
         public ViewHolderRepo(@NonNull View itemView) {
             super(itemView);
 
             repoName = itemView.findViewById(R.id.repoName);
-
+            repoDesc = itemView.findViewById(R.id.repoDesc);
 
         }
 
         public void bind(int position) {
-            repoName.setText(repoList.get(position).getFullName());
+
+            Repo repo = repoList.get(position);
+            repoName.setText(repo.getFullName());
+            repoDesc.setText(repo.getDescription());
+
         }
     }
 }
