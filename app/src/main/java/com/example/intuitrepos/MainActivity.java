@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.intuitrepos.databinding.RepoRowBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     RepoService repoService;
-    private List<Repo> repoList;
+    private List<Repo> repoList = new ArrayList<>();
+    private RecyclerView.Adapter<ViewHolderRepo> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,28 @@ public class MainActivity extends AppCompatActivity {
 
         RepoApplication app = (RepoApplication) getApplication();
 
-
         _listView = findViewById(R.id.list);
+
+        adapter = new RecyclerView.Adapter<ViewHolderRepo>() {
+
+            @NonNull
+            @Override
+            public ViewHolderRepo onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                RepoRowBinding repoRowBinding = RepoRowBinding.inflate(getLayoutInflater(), viewGroup, false);
+                return new ViewHolderRepo(repoRowBinding);
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ViewHolderRepo viewHolderRepo, int i) {
+                viewHolderRepo.bind(repoList.get(i));
+            }
+
+            @Override
+            public int getItemCount() {
+                return repoList.size();
+            }
+        };
+        _listView.setAdapter(adapter);
 
         DaggerMainActivityComponent.builder().appComponent(app.getAppComponent()).build().injectMainActivity(this);
 
@@ -43,28 +65,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
                 repoList = response.body();
-                _listView.setAdapter(new RecyclerView.Adapter<ViewHolderRepo>() {
-
-                    @NonNull
-                    @Override
-                    public ViewHolderRepo onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                        View view = getLayoutInflater().inflate(R.layout.repo_row, viewGroup, false);
-
-                        RepoRowBinding repoRowBinding = RepoRowBinding.inflate(getLayoutInflater(), viewGroup, false);
-
-                        return new ViewHolderRepo(repoRowBinding);
-                    }
-
-                    @Override
-                    public void onBindViewHolder(@NonNull ViewHolderRepo viewHolderRepo, int i) {
-                        viewHolderRepo.bind(repoList.get(i));
-                    }
-
-                    @Override
-                    public int getItemCount() {
-                        return repoList.size();
-                    }
-                });
+                adapter.notifyDataSetChanged();
 
             }
 
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private class ViewHolderRepo extends RecyclerView.ViewHolder {
+    private static class ViewHolderRepo extends RecyclerView.ViewHolder {
 
 
         private RepoRowBinding repoRowBinding;
@@ -87,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         public void bind(Repo repo) {
 
-          repoRowBinding.setRepo(repo);
-          repoRowBinding.executePendingBindings();
+            repoRowBinding.setRepo(repo);
+            repoRowBinding.executePendingBindings();
 
         }
     }
