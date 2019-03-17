@@ -5,5 +5,6 @@ import dagger.Component;
 @Component(modules = {AppModule.class})
 public interface AppComponent {
 
-    RepoService getRepoService();
+
+    IRepository getRepository();
 }

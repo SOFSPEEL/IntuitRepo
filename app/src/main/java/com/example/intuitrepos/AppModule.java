@@ -1,7 +1,5 @@
 package com.example.intuitrepos;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
@@ -26,6 +24,12 @@ public class AppModule {
     RepoService providesRepoService(Retrofit retrofit) {
         return retrofit.create(RepoService.class);
     }
+
+    @Provides
+    IRepository providesRepository(RepoService repoService){
+        return new Repository(repoService);
+    }
+
 
 }
 

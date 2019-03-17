@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.intuitrepos.databinding.RepoRowBinding;
 
@@ -21,11 +19,11 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private RecyclerView _listView;
 
     @Inject
-    RepoService repoService;
+    ReposViewModel reposViewModel;
+
     private List<Repo> repoList = new ArrayList<>();
     private RecyclerView.Adapter<ViewHolderRepo> adapter;
 
@@ -34,8 +32,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.repos);
 
-        RepoApplication app = (RepoApplication) getApplication();
+        inject();
 
+        setupList();
+
+        fetchRepos();
+    }
+
+    private void inject() {
+        RepoApplication app = (RepoApplication) getApplication();
+        DaggerMainActivityComponent.builder().appComponent(app.getAppComponent()).build().injectMainActivity(this);
+    }
+
+    private void fetchRepos() {
+        reposViewModel.FetchRepos().enqueue(new Callback<List<Repo>>() {
+            @Override
+            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
+                repoList = response.body();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Repo>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setupList() {
         _listView = findViewById(R.id.list);
 
         adapter = new RecyclerView.Adapter<ViewHolderRepo>() {
@@ -58,26 +82,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         _listView.setAdapter(adapter);
-
-        DaggerMainActivityComponent.builder().appComponent(app.getAppComponent()).build().injectMainActivity(this);
-
-        repoService.GetRepos().enqueue(new Callback<List<Repo>>() {
-            @Override
-            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
-                repoList = response.body();
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Repo>> call, Throwable t) {
-
-            }
-        });
     }
 
     private static class ViewHolderRepo extends RecyclerView.ViewHolder {
-
 
         private RepoRowBinding repoRowBinding;
 

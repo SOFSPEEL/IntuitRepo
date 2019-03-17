@@ -1,11 +1,12 @@
 package com.example.intuitrepos;
 
-import javax.inject.Singleton;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+
+import javax.inject.Provider;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class MainActivityModule {
@@ -15,6 +16,21 @@ public class MainActivityModule {
     public MainActivityModule(MainActivity mainActivity){
 
         this.mainActivity = mainActivity;
+    }
+
+    @Provides
+    ReposViewModelFactory providesRepoViewModelFactory(final Repository repository){
+        return new ReposViewModelFactory(new Provider<ReposViewModel>() {
+            @Override
+            public ReposViewModel get() {
+                return new ReposViewModel(repository);
+            }
+        });
+    }
+
+    @Provides
+    ReposViewModel providesRepoViewModel(ReposViewModelFactory factory){
+        return ViewModelProviders.of(mainActivity, factory).get(ReposViewModel.class);
     }
 
 }
