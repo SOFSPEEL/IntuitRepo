@@ -1,9 +1,9 @@
 package com.example.intuitrepos;
 
+import android.arch.lifecycle.LiveData;
+
 import java.util.List;
 
-import retrofit2.Call;
-
 public interface IRepository {
-    Call<List<Repo>> FetchRepos();
+    LiveData<List<Repo>> FetchRepos();
 }

@@ -1,22 +1,27 @@
 package com.example.intuitrepos;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import java.util.List;
 
-import retrofit2.Call;
-
 public class ReposViewModel extends ViewModel {
     private IRepository repository;
+    private LiveData<List<Repo>> repos;
 
     public ReposViewModel(IRepository repository) {
 
         this.repository = repository;
+        FetchRepos();
     }
 
-    public Call<List<Repo>> FetchRepos() {
+    public void FetchRepos() {
 
+        repos = repository.FetchRepos();
+    }
 
-        return repository.FetchRepos();
+    public LiveData<List<Repo>> getRepos() {
+        return repos;
     }
 }

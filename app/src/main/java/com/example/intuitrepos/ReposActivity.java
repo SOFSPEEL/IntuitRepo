@@ -1,11 +1,13 @@
 package com.example.intuitrepos;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -64,16 +66,11 @@ public class ReposActivity extends AppCompatActivity implements ISelectedRepo {
 
         reposViewModel = ViewModelProviders.of(this, factory).get(ReposViewModel.class);
 
-        reposViewModel.FetchRepos().enqueue(new Callback<List<Repo>>() {
+        reposViewModel.getRepos().observe(this, new Observer<List<Repo>>() {
             @Override
-            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
-                repoList = response.body();
+            public void onChanged(@Nullable List<Repo> repos) {
+                repoList = repos;
                 adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<List<Repo>> call, Throwable t) {
-
             }
         });
     }
@@ -98,7 +95,7 @@ public class ReposActivity extends AppCompatActivity implements ISelectedRepo {
 
         private ISelectedRepo selectedRepo;
 
-        public ReposAdapter(ISelectedRepo selectedRepo){
+        public ReposAdapter(ISelectedRepo selectedRepo) {
             this.selectedRepo = selectedRepo;
         }
 

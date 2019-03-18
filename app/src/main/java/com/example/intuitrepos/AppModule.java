@@ -3,6 +3,10 @@ package com.example.intuitrepos;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
@@ -13,7 +17,7 @@ public class AppModule {
 
     private Context context;
 
-    public AppModule(Context context){
+    public AppModule(Context context) {
         this.context = context;
     }
 
@@ -35,18 +39,22 @@ public class AppModule {
     }
 
     @Provides
-    IRepository providesRepository(RepoService repoService, RepoDatabase repoDatabase){
-        return new Repository(repoService, repoDatabase);
+    IRepository providesRepository(RepoService repoService, RepoDatabase repoDatabase, Executor executor) {
+        return new Repository(repoService, repoDatabase, executor);
     }
 
 
     @Provides
-    RepoDatabase providesRepoDatabase(){
+    RepoDatabase providesRepoDatabase() {
         return Room.databaseBuilder(context,
                 RepoDatabase.class, "repo").build();
     }
 
+    @Provides
+    Executor providesExecutor() {
 
+        return Executors.newSingleThreadExecutor();
+    }
 }
 
 
