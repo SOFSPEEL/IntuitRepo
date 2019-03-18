@@ -7,9 +7,9 @@ import java.util.List;
 import retrofit2.Call;
 
 public class ReposViewModel extends ViewModel {
-    private Repository repository;
+    private IRepository repository;
 
-    public ReposViewModel(Repository repository) {
+    public ReposViewModel(IRepository repository) {
 
         this.repository = repository;
     }

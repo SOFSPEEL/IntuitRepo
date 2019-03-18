@@ -1,6 +1,5 @@
 package com.example.intuitrepos;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 
 import javax.inject.Provider;
@@ -11,11 +10,11 @@ import dagger.Provides;
 @Module
 public class MainActivityModule {
 
-    private MainActivity mainActivity;
+    private ReposActivity reposActivity;
 
-    public MainActivityModule(MainActivity mainActivity){
+    public MainActivityModule(ReposActivity reposActivity){
 
-        this.mainActivity = mainActivity;
+        this.reposActivity = reposActivity;
     }
 
     @Provides
@@ -30,7 +29,7 @@ public class MainActivityModule {
 
     @Provides
     ReposViewModel providesRepoViewModel(ReposViewModelFactory factory){
-        return ViewModelProviders.of(mainActivity, factory).get(ReposViewModel.class);
+        return ViewModelProviders.of(reposActivity, factory).get(ReposViewModel.class);
     }
 
 }
