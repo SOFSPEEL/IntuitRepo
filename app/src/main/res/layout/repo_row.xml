@@ -7,11 +7,6 @@
     <data>
 
         <variable
-            name="repoActivity"
-            type="com.example.intuitrepos.ReposActivity"
-            />
-
-        <variable
             name="repo"
             type="com.example.intuitrepos.Repo"
             />

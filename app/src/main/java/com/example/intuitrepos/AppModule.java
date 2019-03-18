@@ -1,5 +1,8 @@
 package com.example.intuitrepos;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
+
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
@@ -7,6 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class AppModule {
+
+    private Context context;
+
+    public AppModule(Context context){
+        this.context = context;
+    }
 
     @Provides
     Retrofit providesRetrofit(GsonConverterFactory converterFactory) {
@@ -26,8 +35,15 @@ public class AppModule {
     }
 
     @Provides
-    IRepository providesRepository(RepoService repoService){
-        return new Repository(repoService);
+    IRepository providesRepository(RepoService repoService, RepoDatabase repoDatabase){
+        return new Repository(repoService, repoDatabase);
+    }
+
+
+    @Provides
+    RepoDatabase providesRepoDatabase(){
+        return Room.databaseBuilder(context,
+                RepoDatabase.class, "repo").build();
     }
 
 

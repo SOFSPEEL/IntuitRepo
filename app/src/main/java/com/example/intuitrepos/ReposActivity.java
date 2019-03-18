@@ -2,6 +2,7 @@ package com.example.intuitrepos;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -104,6 +105,7 @@ public class ReposActivity extends AppCompatActivity implements ISelectedRepo {
         @NonNull
         @Override
         public ViewHolderRepo onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
             RepoRowBinding repoRowBinding = RepoRowBinding.inflate(getLayoutInflater(), viewGroup, false);
             return new ViewHolderRepo(repoRowBinding);
         }

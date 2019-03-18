@@ -6,5 +6,6 @@ import dagger.Component;
 public interface AppComponent {
 
 
+
     IRepository getRepository();
 }

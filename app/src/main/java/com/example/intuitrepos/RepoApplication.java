@@ -10,7 +10,7 @@ public class RepoApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        appComponent = DaggerAppComponent.builder().build();
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(getApplicationContext())).build();
     }
 
     public AppComponent getAppComponent() {

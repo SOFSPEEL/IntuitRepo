@@ -8,9 +8,11 @@ public class Repository implements IRepository {
 
     private RepoService repoService;
 
-    public Repository(RepoService repoService) {
+
+    public Repository(RepoService repoService, RepoDatabase repoDatabase) {
 
         this.repoService = repoService;
+
     }
 
     @Override
