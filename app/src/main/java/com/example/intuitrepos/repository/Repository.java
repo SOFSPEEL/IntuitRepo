@@ -1,8 +1,12 @@
-package com.example.intuitrepos;
+package com.example.intuitrepos.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+
+import com.example.intuitrepos.db.RepoDao;
+import com.example.intuitrepos.db.RepoDatabase;
+import com.example.intuitrepos.dto.Repo;
+import com.example.intuitrepos.network.RepoService;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -29,17 +33,17 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public LiveData<List<Repo>> FetchRepos() {
+    public LiveData<List<Repo>> fetchRepos() {
 
-        Init();
+        init();
         return repoDao.fetchAll();
     }
 
-    public void Init() {
+    public void init() {
 
         executor.execute(() -> {
 
-            repoService.GetRepos().enqueue(new Callback<List<Repo>>() {
+            repoService.getRepos().enqueue(new Callback<List<Repo>>() {
                 @Override
                 public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
                     List<Repo> repos = response.body();
@@ -54,13 +58,11 @@ public class Repository implements IRepository {
                 }
             });
         });
-
-
     }
 
 
     @Override
-    public void Insert(Repo repo) {
+    public void insert(Repo repo) {
         executor.execute(() -> {
             repoDao.insert(repo);
         });

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">IntuitRepos</string>
+    <string name="issues">Issues</string>
+    <string name="stars">Stars</string>
 </resources>

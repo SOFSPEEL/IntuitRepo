@@ -1,9 +1,8 @@
-package com.example.intuitrepos;
+package com.example.intuitrepos.views;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,16 +12,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.intuitrepos.R;
+import com.example.intuitrepos.dto.Repo;
+import com.example.intuitrepos.RepoApplication;
+import com.example.intuitrepos.vm.ReposViewModel;
+import com.example.intuitrepos.vm.ReposViewModelFactory;
 import com.example.intuitrepos.databinding.RepoRowBinding;
+import com.example.intuitrepos.di.AppComponent;
+import com.example.intuitrepos.di.DaggerMainActivityComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Provider;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ReposActivity extends AppCompatActivity implements ISelectedRepo {
 
@@ -57,12 +59,7 @@ public class ReposActivity extends AppCompatActivity implements ISelectedRepo {
     private void fetchRepos() {
 
 
-        ReposViewModelFactory factory = new ReposViewModelFactory(new Provider<ReposViewModel>() {
-            @Override
-            public ReposViewModel get() {
-                return new ReposViewModel(appComponent.getRepository());
-            }
-        });
+        ReposViewModelFactory factory = new ReposViewModelFactory(() -> new ReposViewModel(appComponent.getRepository()));
 
         reposViewModel = ViewModelProviders.of(this, factory).get(ReposViewModel.class);
 
@@ -87,7 +84,9 @@ public class ReposActivity extends AppCompatActivity implements ISelectedRepo {
 
     @Override
     public void selected(Repo repo) {
-        this.startActivity(new Intent(this, RepoDetailActivity.class));
+        Intent intent = new Intent(this, RepoDetailActivity.class);
+        intent.putExtra("repo", repo);
+        this.startActivity(intent);
     }
 
 

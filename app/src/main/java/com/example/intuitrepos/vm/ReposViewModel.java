@@ -1,25 +1,25 @@
-package com.example.intuitrepos;
+package com.example.intuitrepos.vm;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.os.Handler;
 
-import java.util.List;
-import java.util.logging.LogRecord;
+import com.example.intuitrepos.repository.IRepository;
+import com.example.intuitrepos.dto.Repo;
 
-public class ReposViewModel extends ViewModel {
+import java.util.List;
+
+public class ReposViewModel extends BaseViewModel {
     private IRepository repository;
     private LiveData<List<Repo>> repos;
 
     public ReposViewModel(IRepository repository) {
 
         this.repository = repository;
-        FetchRepos();
-        AddRepoAfterSomeTime(repository);
+        fetch();
+        addRepoAfterSomeTime(repository);
     }
 
-    private void AddRepoAfterSomeTime(IRepository repository) {
+    private void addRepoAfterSomeTime(IRepository repository) {
         //todo: get rid off
         Repo repo = new Repo();
         repo.name = "junk";
@@ -27,13 +27,14 @@ public class ReposViewModel extends ViewModel {
 
         new Handler().postDelayed(() -> {
 
-            repository.Insert(repo);
+            repository.insert(repo);
         }, 10000);
     }
 
-    public void FetchRepos() {
+    @Override
+    public void fetch() {
 
-        repos = repository.FetchRepos();
+        repos = repository.fetchRepos();
     }
 
     public LiveData<List<Repo>> getRepos() {

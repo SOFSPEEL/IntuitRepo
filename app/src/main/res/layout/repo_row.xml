@@ -8,7 +8,7 @@
 
         <variable
             name="repo"
-            type="com.example.intuitrepos.Repo"
+            type="com.example.intuitrepos.dto.Repo"
             />
 
     </data>

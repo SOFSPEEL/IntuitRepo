@@ -1,4 +1,4 @@
-package com.example.intuitrepos;
+package com.example.intuitrepos.vm;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

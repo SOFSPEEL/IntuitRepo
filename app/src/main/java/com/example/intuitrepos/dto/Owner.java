@@ -1,5 +1,5 @@
 
-package com.example.intuitrepos;
+package com.example.intuitrepos.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

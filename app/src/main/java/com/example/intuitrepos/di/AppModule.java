@@ -1,10 +1,14 @@
-package com.example.intuitrepos;
+package com.example.intuitrepos.di;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import com.example.intuitrepos.repository.IRepository;
+import com.example.intuitrepos.db.RepoDatabase;
+import com.example.intuitrepos.network.RepoService;
+import com.example.intuitrepos.repository.Repository;
+
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import dagger.Module;

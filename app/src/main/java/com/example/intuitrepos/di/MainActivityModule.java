@@ -1,6 +1,11 @@
-package com.example.intuitrepos;
+package com.example.intuitrepos.di;
 
 import android.arch.lifecycle.ViewModelProviders;
+
+import com.example.intuitrepos.views.ReposActivity;
+import com.example.intuitrepos.vm.ReposViewModel;
+import com.example.intuitrepos.vm.ReposViewModelFactory;
+import com.example.intuitrepos.repository.Repository;
 
 import javax.inject.Provider;
 

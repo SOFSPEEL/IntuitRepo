@@ -1,4 +1,6 @@
-package com.example.intuitrepos;
+package com.example.intuitrepos.di;
+
+import com.example.intuitrepos.views.ReposActivity;
 
 import dagger.Component;
 
