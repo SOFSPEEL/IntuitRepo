@@ -13,36 +13,39 @@ import retrofit2.Response;
 
 public class Repository implements IRepository {
 
+    private final RepoDao repoDao;
     private RepoService repoService;
-    private RepoDatabase repoDatabase;
+
     private Executor executor;
 
     @NonNull
-    private MutableLiveData<List<Repo>> liveData = new MutableLiveData<>();
+    private LiveData<List<Repo>> liveData;
 
     public Repository(RepoService repoService, RepoDatabase repoDatabase, Executor executor) {
 
         this.repoService = repoService;
-        this.repoDatabase = repoDatabase;
         this.executor = executor;
+        repoDao = repoDatabase.repoDao();
     }
 
     @Override
     public LiveData<List<Repo>> FetchRepos() {
 
-        executor.execute(()-> {
-            RepoDao repoDao = repoDatabase.repoDao();
+        Init();
+        return repoDao.fetchAll();
+    }
+
+    public void Init() {
+
+        executor.execute(() -> {
+
             repoService.GetRepos().enqueue(new Callback<List<Repo>>() {
                 @Override
                 public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
                     List<Repo> repos = response.body();
 
+                    Insert(repos);
 
-                    liveData.setValue(repos);
-
-                    executor.execute(()->{
-                        repoDao.insertAll(repos);
-                    });
                 }
 
                 @Override
@@ -52,7 +55,21 @@ public class Repository implements IRepository {
             });
         });
 
-        return liveData;
 
+    }
+
+
+    @Override
+    public void Insert(Repo repo) {
+        executor.execute(() -> {
+            repoDao.insert(repo);
+        });
+    }
+
+    private void Insert(List<Repo> repos) {
+
+        executor.execute(() -> {
+            repoDao.insertAll(repos);
+        });
     }
 }
