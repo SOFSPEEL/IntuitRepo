@@ -46,6 +46,7 @@ public class AppModule {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
 
+                //todo:
                 String basic = Credentials.basic("sofspeel", "blah");
                 Request.Builder builder = originalRequest.newBuilder().header("Authorization",
                         basic);

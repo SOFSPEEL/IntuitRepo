@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,7 +12,8 @@ import com.example.intuitrepos.databinding.RepoDetailBinding;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.vm.RepoViewModel;
 
-public class RepoDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class RepoDetailActivity extends DetailActivity  {
+
     private Repo repo;
 
     @Override
@@ -23,14 +23,12 @@ public class RepoDetailActivity extends AppCompatActivity implements View.OnClic
         setupBinding();
 
     }
-
     private void setupBinding() {
         RepoDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.repo_detail);
         binding.setListener(this);
         repo = getIntent().getParcelableExtra(Constants.EXTRA_KEY_ITEM);
         binding.setRepo(new RepoViewModel(repo));
     }
-
     @Override
     public void onClick(View view) {
 

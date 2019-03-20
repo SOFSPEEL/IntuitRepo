@@ -19,24 +19,16 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@{issue.title}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textViewIssueNumber"
             app:layout_constraintTop_toTopOf="@+id/textViewIssue"
             tools:text="Title" />
         <!--todo: url-->
-        <TextView
-            android:id="@+id/issueDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@{issue.url}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewIssue"
-            tools:text="Desc" />
 
         <TextView
             android:id="@+id/textViewIssue"
@@ -44,8 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/issue"
-            app:layout_constraintHorizontal_chainStyle="spread"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{String.valueOf(issue.number)}"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/textViewIssue"
             app:layout_constraintTop_toTopOf="@+id/textViewIssue"
             tools:text="1" />

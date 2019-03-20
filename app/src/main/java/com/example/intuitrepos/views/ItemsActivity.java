@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.intuitrepos.R;
@@ -44,13 +45,10 @@ public abstract class ItemsActivity<T extends Object, TViewModel extends ItemsVi
 
         fetchItems();
 
-    }
 
-    @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
 
     }
+
 
     protected abstract int getLayoutId();
 
@@ -77,6 +75,9 @@ public abstract class ItemsActivity<T extends Object, TViewModel extends ItemsVi
 
     private void setupList() {
         _listView = findViewById(R.id.list);
+
+        _listView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
 
         adapter = createAdapter();
 

@@ -8,7 +8,7 @@ public class ReposActivity extends ItemsActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.repos;
+        return R.layout.items;
     }
 
     @Override

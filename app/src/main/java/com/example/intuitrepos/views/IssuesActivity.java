@@ -6,9 +6,6 @@ import com.example.intuitrepos.R;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.vm.IssuesViewModel;
 import com.example.intuitrepos.vm.ItemsViewModel;
-import com.example.intuitrepos.vm.ReposViewModel;
-
-import java.io.Serializable;
 
 public class IssuesActivity extends ItemsActivity {
 
@@ -23,7 +20,7 @@ public class IssuesActivity extends ItemsActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.repos;
+        return R.layout.items;
     }
 
     @Override
@@ -43,8 +40,8 @@ public class IssuesActivity extends ItemsActivity {
     }
 
     @Override
-    protected Class<RepoDetailActivity> getDetailActivity() {
-        return RepoDetailActivity.class;
+    protected Class<IssueDetailActivity> getDetailActivity() {
+        return IssueDetailActivity.class;
     }
 
 }
