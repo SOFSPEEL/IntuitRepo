@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.example.intuitrepos.db.RepoDao;
 import com.example.intuitrepos.db.RepoDatabase;
+import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.network.RepoService;
 
@@ -35,11 +36,47 @@ public class Repository implements IRepository {
     @Override
     public LiveData<List<Repo>> fetchRepos() {
 
-        init();
-        return repoDao.fetchAll();
+        fetchAndInsertRepos();
+        return repoDao.fetchAllRepos();
     }
 
-    public void init() {
+    @Override
+    public LiveData<List<Issue>> fetchIssues(int repoId, String repoName, int count) {
+
+        for (int i = 1; i <= count; i++) {
+            fetchIssue(repoId, repoName, i);
+        }
+
+        return repoDao.fetchAllIssues(repoId);
+    }
+
+    private void fetchIssue(int repoId, String repoName, int i) {
+        executor.execute(() -> {
+            repoService.getIssue(repoName, i).enqueue(new Callback<Issue>() {
+                @Override
+                public void onResponse(Call<Issue> call, Response<Issue> response) {
+                    if (response.isSuccessful()) {
+                        Issue issue = response.body();
+                        issue.repoId = repoId;
+                        insertIssue(issue);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Issue> call, Throwable t) {
+
+                }
+            });
+        });
+    }
+
+    private void insertIssue(Issue issue) {
+        executor.execute(() -> {
+            repoDao.insertIssue(issue);
+        });
+    }
+
+    public void fetchAndInsertRepos() {
 
         executor.execute(() -> {
 
@@ -47,8 +84,9 @@ public class Repository implements IRepository {
                 @Override
                 public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
                     List<Repo> repos = response.body();
-
-                    Insert(repos);
+                    if (response.isSuccessful()) {
+                        insertRepos(repos);
+                    }
 
                 }
 
@@ -68,10 +106,10 @@ public class Repository implements IRepository {
         });
     }
 
-    private void Insert(List<Repo> repos) {
+    private void insertRepos(List<Repo> repos) {
 
         executor.execute(() -> {
-            repoDao.insertAll(repos);
+            repoDao.insertAllRepos(repos);
         });
     }
 }

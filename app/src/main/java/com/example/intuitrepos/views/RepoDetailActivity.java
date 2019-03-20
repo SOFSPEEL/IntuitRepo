@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.intuitrepos.R;
 import com.example.intuitrepos.databinding.RepoDetailBinding;
 import com.example.intuitrepos.dto.Repo;
+import com.example.intuitrepos.vm.RepoViewModel;
 
 public class RepoDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private Repo repo;
@@ -26,14 +28,22 @@ public class RepoDetailActivity extends AppCompatActivity implements View.OnClic
         RepoDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.repo_detail);
         binding.setListener(this);
         repo = getIntent().getParcelableExtra(Constants.EXTRA_KEY_ITEM);
-        binding.setRepo(repo);
+        binding.setRepo(new RepoViewModel(repo));
     }
-
 
     @Override
     public void onClick(View view) {
+
+        if (repo.openIssues > 0) {
+            showList();
+        } else {
+            Toast.makeText(this, "This repo has no issues", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showList() {
         Intent intent = new Intent(this, IssuesActivity.class);
-        intent.putExtra("issuesUrl", repo.issuesUrl);
+        intent.putExtra(Constants.EXTRA_KEY_ITEM, repo);
         startActivity(intent);
     }
 }

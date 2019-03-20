@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="issue"
+            type="com.example.intuitrepos.dto.Issue"
+            />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{issue.title}"
+            app:layout_constraintStart_toEndOf="@+id/textViewIssueNumber"
+            app:layout_constraintTop_toTopOf="@+id/textViewIssue"
+            tools:text="Title" />
+        <!--todo: url-->
+        <TextView
+            android:id="@+id/issueDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@{issue.url}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewIssue"
+            tools:text="Desc" />
+
+        <TextView
+            android:id="@+id/textViewIssue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/issue"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewIssueNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{String.valueOf(issue.number)}"
+            app:layout_constraintStart_toEndOf="@+id/textViewIssue"
+            app:layout_constraintTop_toTopOf="@+id/textViewIssue"
+            tools:text="1" />
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

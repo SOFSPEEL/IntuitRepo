@@ -7,8 +7,10 @@
 
         <variable
             name="repo"
-            type="com.example.intuitrepos.dto.Repo" />
-
+            type="com.example.intuitrepos.vm.RepoViewModel" />
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
     </data>
 
 
@@ -45,6 +47,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/issues"
+            android:onClick="@{listener::onClick}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDesc" />
 
@@ -53,10 +56,11 @@
             android:layout_width="93dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{String.valueOf(repo.openIssues)}"
+            android:text="@{String.valueOf(repo.openIssuesCount)}"
             app:layout_constraintStart_toEndOf="@+id/textViewIssues"
             app:layout_constraintTop_toTopOf="@+id/textViewIssues"
             tools:text="Issue Count" />
+
         <android.support.constraint.Guideline
             android:id="@+id/guideline5"
             android:layout_width="wrap_content"
@@ -85,6 +89,18 @@
             app:layout_constraintTop_toTopOf="@+id/textViewIssues"
             tools:text="Star Count" />
 
+        <Button
+            android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:onClick="@{listener::onClick}"
+            android:text="@string/view_issues"
+            android:visibility="@{repo.issueVisibility, default=gone}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewIssues" />
 
 
     </android.support.constraint.ConstraintLayout>

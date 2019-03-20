@@ -2,4 +2,6 @@
     <string name="app_name">IntuitRepos</string>
     <string name="issues">Issues</string>
     <string name="stars">Stars</string>
+    <string name="view_issues">View Issues</string>
+    <string name="issue">Issue#</string>
 </resources>

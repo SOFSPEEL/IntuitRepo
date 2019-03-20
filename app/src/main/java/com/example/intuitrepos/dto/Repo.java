@@ -3,15 +3,16 @@ package com.example.intuitrepos.dto;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
 public class Repo implements Parcelable {
-
 
     public Repo(){}
 
