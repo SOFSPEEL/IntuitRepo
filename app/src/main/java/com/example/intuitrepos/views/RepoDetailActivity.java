@@ -1,34 +1,48 @@
 package com.example.intuitrepos.views;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.intuitrepos.R;
 import com.example.intuitrepos.databinding.RepoDetailBinding;
+import com.example.intuitrepos.di.DaggerRepoDetailActivityComponent;
+import com.example.intuitrepos.di.RepoDetailActivityModule;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.vm.RepoViewModel;
 
-public class RepoDetailActivity extends DetailActivity  {
+public class RepoDetailActivity extends DetailActivity<RepoViewModel, RepoDetailBinding> {
 
     private Repo repo;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setupBinding();
-
-    }
-    private void setupBinding() {
-        RepoDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.repo_detail);
-        binding.setListener(this);
+    protected void initializeViewModelFromParcelable(RepoViewModel viewModel) {
+        super.initializeViewModelFromParcelable(viewModel);
         repo = getIntent().getParcelableExtra(Constants.EXTRA_KEY_ITEM);
-        binding.setRepo(new RepoViewModel(repo));
+        viewModel.setRepo(repo);
     }
+
+    @Override
+    protected Class<RepoViewModel> getViewModelClass() {
+        return RepoViewModel.class;
+    }
+
+    @Override
+    protected void inject() {
+        DaggerRepoDetailActivityComponent.builder().appComponent(appComponent).repoDetailActivityModule(new RepoDetailActivityModule(this)).build().injectReposActivity(this);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.repo_detail;
+    }
+
+    @Override
+    protected void setupBinding(RepoDetailBinding binding) {
+        binding.setListener(this);
+        binding.setRepo(viewModel);
+    }
+
     @Override
     public void onClick(View view) {
 

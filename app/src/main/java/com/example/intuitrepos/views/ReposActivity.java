@@ -10,7 +10,7 @@ public class ReposActivity extends ItemsActivity {
 
     @Override
     protected void inject() {
-        super.inject();
+
         ReposActivityComponent build = DaggerReposActivityComponent.builder().reposActivityModule(new ReposActivityModule(this)).appComponent(appComponent).build();
         build.injectReposActivity(this);
     }
@@ -22,7 +22,7 @@ public class ReposActivity extends ItemsActivity {
     }
 
     @Override
-    protected Class<ReposViewModel> getItemsClass() {
+    protected Class<ReposViewModel> getViewModelClass() {
         return ReposViewModel.class;
     }
 

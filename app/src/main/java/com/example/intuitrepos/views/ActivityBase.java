@@ -17,7 +17,6 @@ abstract class ActivityBase<TViewModel extends ViewModel> extends AppCompatActiv
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-
     protected AppComponent appComponent;
     protected TViewModel viewModel;
 
@@ -25,21 +24,17 @@ abstract class ActivityBase<TViewModel extends ViewModel> extends AppCompatActiv
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inject();
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getItemsClass());
-        initializeViewModel(viewModel);
-
-
-    }
-
-
-    protected void initializeViewModel(TViewModel viewModel) {
-    }
-
-    protected abstract Class<TViewModel> getItemsClass();
-
-    protected void inject() {
         RepoApplication app = (RepoApplication) getApplication();
         appComponent = app.getAppComponent();
+        inject();
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass());
+        initializeViewModelFromParcelable(viewModel);
     }
+
+    protected void initializeViewModelFromParcelable(TViewModel viewModel) {
+    }
+
+    protected abstract Class<TViewModel> getViewModelClass();
+
+    protected abstract void inject();
 }

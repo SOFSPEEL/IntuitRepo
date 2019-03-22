@@ -23,8 +23,6 @@ public abstract class ItemsActivity<T extends Object, TViewModel extends ItemsVi
 
         setContentView(getLayoutId());
 
-        inject();
-
         setupList();
 
         fetchItems();

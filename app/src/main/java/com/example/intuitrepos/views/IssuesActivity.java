@@ -1,14 +1,9 @@
 package com.example.intuitrepos.views;
 
-import android.os.Bundle;
-
 import com.example.intuitrepos.R;
 import com.example.intuitrepos.di.DaggerIssuesActivityComponent;
-import com.example.intuitrepos.di.DaggerReposActivityComponent;
 import com.example.intuitrepos.di.IssuesActivityComponent;
 import com.example.intuitrepos.di.IssuesActivityModule;
-import com.example.intuitrepos.di.ReposActivityComponent;
-import com.example.intuitrepos.di.ReposActivityModule;
 import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.vm.IssuesViewModel;
@@ -16,8 +11,8 @@ import com.example.intuitrepos.vm.IssuesViewModel;
 public class IssuesActivity extends ItemsActivity<Issue, IssuesViewModel> {
 
     @Override
-    protected void initializeViewModel(IssuesViewModel viewModel) {
-        super.initializeViewModel(viewModel);
+    protected void initializeViewModelFromParcelable(IssuesViewModel viewModel) {
+        super.initializeViewModelFromParcelable(viewModel);
 
         Repo repo = getIntent().getParcelableExtra(Constants.EXTRA_KEY_ITEM);
         viewModel.setRepo(repo);
@@ -25,7 +20,6 @@ public class IssuesActivity extends ItemsActivity<Issue, IssuesViewModel> {
 
     @Override
     protected void inject() {
-        super.inject();
         IssuesActivityComponent build = DaggerIssuesActivityComponent.builder().issuesActivityModule(new IssuesActivityModule(this)).appComponent(appComponent).build();
         build.injectReposActivity(this);
     }
@@ -36,7 +30,7 @@ public class IssuesActivity extends ItemsActivity<Issue, IssuesViewModel> {
     }
 
     @Override
-    protected Class<IssuesViewModel> getItemsClass() {
+    protected Class<IssuesViewModel> getViewModelClass() {
         return IssuesViewModel.class;
     }
 

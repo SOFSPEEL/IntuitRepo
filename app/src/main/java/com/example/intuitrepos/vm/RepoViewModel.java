@@ -7,35 +7,31 @@ import android.view.View;
 
 import com.example.intuitrepos.dto.Repo;
 
-public class RepoViewModel extends BaseObservable {
+public class RepoViewModel extends ViewModel {
 
-    private final Repo repo;
+    private Repo repo;
 
-    public RepoViewModel(Repo repo) {
+
+    public void setRepo(Repo repo){
         this.repo = repo;
     }
 
-    @Bindable
     public int getIssueVisibility() {
         return repo.openIssuesCount > 0 ? View.VISIBLE:View.GONE;
     }
 
-    @Bindable
     public String getName() {
         return repo.name;
     }
 
-    @Bindable
     public String getDescription() {
         return repo.description;
     }
 
-    @Bindable
     public Integer getOpenIssuesCount() {
         return repo.openIssuesCount;
     }
 
-    @Bindable
     public Integer getStargazersCount() {
         return repo.stargazersCount;
     }

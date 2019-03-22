@@ -1,29 +1,28 @@
 package com.example.intuitrepos.vm;
 
+import android.arch.lifecycle.ViewModel;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.view.View;
 
 import com.example.intuitrepos.dto.Issue;
 
-public class IssueViewModel extends BaseObservable {
+public class IssueViewModel extends ViewModel {
 
-    private final Issue issue;
+    private Issue issue;
 
-    public IssueViewModel(Issue issue) {
-        this.issue = issue;
-    }
 
-    @Bindable
     public String getTitle() {
         return issue.title;
     }
 
-    @Bindable
     public Integer getNumber() {
         return issue.number;
     }
 
 
+    public void setIssue(Issue issue) {
+        this.issue = issue;
+    }
 }
 

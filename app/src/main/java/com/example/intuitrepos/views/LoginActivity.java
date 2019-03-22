@@ -31,13 +31,13 @@ public class LoginActivity extends ActivityBase<LoginViewModel> implements View.
     }
 
     @Override
-    protected Class<LoginViewModel> getItemsClass() {
+    protected Class<LoginViewModel> getViewModelClass() {
         return LoginViewModel.class;
     }
 
     @Override
     protected void inject() {
-        super.inject();
+
         LoginActivityComponent build = DaggerLoginActivityComponent.builder().loginActivityModule(new LoginActivityModule(this)).appComponent(appComponent).build();
         build.injectLoginActivity(this);
     }

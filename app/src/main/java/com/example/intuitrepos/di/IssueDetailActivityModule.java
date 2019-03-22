@@ -4,25 +4,24 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.repository.IRepository;
-import com.example.intuitrepos.views.IssuesActivity;
-import com.example.intuitrepos.vm.IssuesViewModel;
-import com.example.intuitrepos.vm.ReposViewModel;
+import com.example.intuitrepos.views.IssueDetailActivity;
+import com.example.intuitrepos.views.RepoDetailActivity;
+import com.example.intuitrepos.vm.IssueViewModel;
+import com.example.intuitrepos.vm.RepoViewModel;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class IssuesActivityModule {
+public class IssueDetailActivityModule {
 
-    private IssuesActivity issuesActivity;
+    private IssueDetailActivity issueDetailActivity;
 
-    public IssuesActivityModule(IssuesActivity issuesActivity){
+    public IssueDetailActivityModule(IssueDetailActivity issueDetailActivity){
 
-        this.issuesActivity = issuesActivity;
+        this.issueDetailActivity = issueDetailActivity;
     }
-
 
     @Provides
     ViewModelProvider.Factory providesFactory(IRepository repository){
@@ -30,10 +29,9 @@ public class IssuesActivityModule {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new IssuesViewModel(repository);
+                return (T) new IssueViewModel();
             }
         };
     }
-
 
 }

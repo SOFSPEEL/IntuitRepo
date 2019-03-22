@@ -11,7 +11,6 @@ import dagger.Component;
 @Singleton2
 @Component(modules = {LoginActivityModule.class}, dependencies = {AppComponent.class})
 
-public interface LoginActivityComponent {
+public interface LoginActivityComponent extends IFactory {
     void injectLoginActivity(LoginActivity loginActivity);
-    ViewModelProvider.Factory getFactory();
 }

@@ -10,7 +10,7 @@ import dagger.Component;
 @Singleton2
 @Component(modules = {ReposActivityModule.class}, dependencies = {AppComponent.class})
 
-public interface ReposActivityComponent {
+public interface ReposActivityComponent extends IFactory{
     void injectReposActivity(ReposActivity reposActivity);
-    ViewModelProvider.Factory getFactory();
+
 }
