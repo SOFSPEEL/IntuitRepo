@@ -1,13 +1,14 @@
 package com.example.intuitrepos.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
 
 import com.example.intuitrepos.db.RepoDao;
 import com.example.intuitrepos.db.RepoDatabase;
 import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.network.RepoService;
+import com.example.intuitrepos.vm.Creds;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -19,18 +20,20 @@ import retrofit2.Response;
 public class Repository implements IRepository {
 
     private final RepoDao repoDao;
+
+    SharedPreferences prefs;
     private RepoService repoService;
 
     private Executor executor;
 
-    @NonNull
-    private LiveData<List<Repo>> liveData;
 
-    public Repository(RepoService repoService, RepoDatabase repoDatabase, Executor executor) {
+    public Repository(RepoService repoService, RepoDatabase repoDatabase, Executor executor, SharedPreferences preferences) {
 
         this.repoService = repoService;
         this.executor = executor;
         repoDao = repoDatabase.repoDao();
+
+        this.prefs = preferences;
     }
 
     @Override
@@ -104,6 +107,23 @@ public class Repository implements IRepository {
         executor.execute(() -> {
             repoDao.insert(repo);
         });
+    }
+
+    @Override
+    public String fetchPassword() {
+        return prefs.getString("password", "");
+    }
+
+    @Override
+    public void saveCreds(String userName, String password) {
+        prefs.edit().putString("username", userName).putString("password", password).apply();
+    }
+
+    @Override
+    public Creds getCreds() {
+        String username = prefs.getString("username", "");
+        String password = prefs.getString("password", "");
+        return new Creds(username, password);
     }
 
     private void insertRepos(List<Repo> repos) {

@@ -8,14 +8,17 @@ public class IssuesViewModel extends ItemsViewModel<Issue> {
 
     private Repo repo;
 
-    public IssuesViewModel(IRepository repository, Repo repo) {
+    public IssuesViewModel(IRepository repository) {
         super(repository);
-        this.repo = repo;
     }
 
     @Override
     public void fetch() {
 
         items = repository.fetchIssues(repo.id, repo.name, repo.openIssuesCount);
+    }
+
+    public void setRepo(Repo repo) {
+        this.repo = repo;
     }
 }

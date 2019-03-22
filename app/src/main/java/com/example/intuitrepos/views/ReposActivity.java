@@ -1,10 +1,20 @@
 package com.example.intuitrepos.views;
 
 import com.example.intuitrepos.R;
-import com.example.intuitrepos.vm.ItemsViewModel;
+import com.example.intuitrepos.di.DaggerReposActivityComponent;
+import com.example.intuitrepos.di.ReposActivityComponent;
+import com.example.intuitrepos.di.ReposActivityModule;
 import com.example.intuitrepos.vm.ReposViewModel;
 
 public class ReposActivity extends ItemsActivity {
+
+    @Override
+    protected void inject() {
+        super.inject();
+        ReposActivityComponent build = DaggerReposActivityComponent.builder().reposActivityModule(new ReposActivityModule(this)).appComponent(appComponent).build();
+        build.injectReposActivity(this);
+    }
+
 
     @Override
     protected int getLayoutId() {
@@ -16,10 +26,6 @@ public class ReposActivity extends ItemsActivity {
         return ReposViewModel.class;
     }
 
-    @Override
-    protected ItemsViewModel createItemsViewModel() {
-        return new ReposViewModel(appComponent.getRepository());
-    }
 
     @Override
     protected ItemsAdapter createAdapter() {
@@ -30,5 +36,6 @@ public class ReposActivity extends ItemsActivity {
     protected Class<RepoDetailActivity> getDetailActivity() {
         return RepoDetailActivity.class;
     }
+
 
 }

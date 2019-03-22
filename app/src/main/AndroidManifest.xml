@@ -12,17 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.ReposActivity">
+        <activity android:name=".views.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.IssuesActivity"></activity>
-
-        <activity android:name=".views.RepoDetailActivity"></activity>
-        <activity android:name=".views.IssueDetailActivity"></activity>
+        <activity android:name=".views.ReposActivity">
+        </activity>
+        <activity android:name=".views.IssuesActivity" />
+        <activity android:name=".views.RepoDetailActivity" />
+        <activity android:name=".views.IssueDetailActivity" />
     </application>
 
 </manifest>

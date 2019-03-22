@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.dto.Repo;
+import com.example.intuitrepos.vm.Creds;
 
 import java.util.List;
 
@@ -13,4 +14,10 @@ public interface IRepository {
     LiveData<List<Issue>> fetchIssues(int repoId, String repoName, int count);
 
     void insert(Repo repo);
+
+    String fetchPassword();
+
+    void saveCreds(String userName, String password);
+
+    Creds getCreds();
 }
