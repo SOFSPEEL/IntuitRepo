@@ -8,7 +8,7 @@ import com.example.intuitrepos.db.RepoDatabase;
 import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.network.RepoService;
-import com.example.intuitrepos.vm.Creds;
+import com.example.intuitrepos.dto.Creds;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -19,6 +19,8 @@ import retrofit2.Response;
 
 public class Repository implements IRepository {
 
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
     private final RepoDao repoDao;
 
     SharedPreferences prefs;
@@ -110,19 +112,14 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public String fetchPassword() {
-        return prefs.getString("password", "");
-    }
-
-    @Override
     public void saveCreds(String userName, String password) {
-        prefs.edit().putString("username", userName).putString("password", password).apply();
+        prefs.edit().putString(KEY_USERNAME, userName).putString(KEY_PASSWORD, password).apply();
     }
 
     @Override
     public Creds getCreds() {
-        String username = prefs.getString("username", "");
-        String password = prefs.getString("password", "");
+        String username = prefs.getString(KEY_USERNAME, "");
+        String password = prefs.getString(KEY_PASSWORD, "");
         return new Creds(username, password);
     }
 

@@ -60,9 +60,15 @@ public abstract class ItemsActivity<T extends Object, TViewModel extends ItemsVi
 
     @Override
     public void selected(Parcelable item) {
+
         Intent intent = new Intent(this, getDetailActivity());
         intent.putExtra(Constants.EXTRA_KEY_ITEM, item);
         this.startActivity(intent);
+    }
+
+    @Override
+    public void notify(int position) {
+        adapter.notifyItemChanged(position);
     }
 
     protected abstract Class<?> getDetailActivity();

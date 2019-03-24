@@ -1,6 +1,7 @@
 package com.example.intuitrepos.views;
 
 import android.arch.lifecycle.ViewModel;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ public abstract class DetailActivity<TViewModel extends ViewModel, TBinding exte
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         setupBinding();
     }
 

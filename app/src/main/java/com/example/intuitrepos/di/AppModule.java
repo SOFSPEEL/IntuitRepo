@@ -8,6 +8,7 @@ import com.example.intuitrepos.repository.IRepository;
 import com.example.intuitrepos.db.RepoDatabase;
 import com.example.intuitrepos.network.RepoService;
 import com.example.intuitrepos.repository.Repository;
+import com.example.intuitrepos.dto.Creds;
 
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -65,8 +66,8 @@ public class AppModule {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
                 
-                String password = repository.getRepository().fetchPassword();
-                String basic = Credentials.basic("sofspeel", password);
+                Creds creds = repository.getRepository().getCreds();
+                String basic = Credentials.basic(creds.getUsername(), creds.getPassword());
                 Request.Builder builder = originalRequest.newBuilder().header("Authorization",
                         basic);
 

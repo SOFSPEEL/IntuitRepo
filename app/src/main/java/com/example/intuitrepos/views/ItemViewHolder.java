@@ -5,14 +5,17 @@ import android.graphics.Color;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.View;
 
 public abstract class ItemViewHolder<T extends Parcelable> extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private int selected_position = -1;
+
     protected ViewDataBinding binding;
     private ISelectedItem selectedItem;
     private T item;
+
+    private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
     public ItemViewHolder(@NonNull ViewDataBinding binding, ISelectedItem selectedItem) {
         super(binding.getRoot());
@@ -29,23 +32,22 @@ public abstract class ItemViewHolder<T extends Parcelable> extends RecyclerView.
 
         binding.executePendingBindings();
 
-        binding.getRoot().setBackgroundColor(selected_position == position ? Color.LTGRAY : Color.TRANSPARENT);
-
     }
 
     @Override
     public void onClick(View view) {
-        if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+        int adapterPosition = getAdapterPosition();
 
-        // Updating old as well as new positions
-//        notifyItemChanged(selected_position);
-//        int newPosition = getAdapterPosition();
-//        selected_position = newPosition;
-//        notifyItemChanged(selected_position);
-//todo:
+        if (selectedItems.get(adapterPosition, false)) {
+            selectedItems.delete(adapterPosition);
+            view.setSelected(false);
+        }
+        else {
+            selectedItems.put(adapterPosition, true);
+            view.setSelected(true);
+        }
 
         selectedItem.selected(item);
-
 
     }
 }

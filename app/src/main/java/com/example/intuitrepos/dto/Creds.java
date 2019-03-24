@@ -1,4 +1,4 @@
-package com.example.intuitrepos.vm;
+package com.example.intuitrepos.dto;
 
 public class Creds {
    private String username;
@@ -14,15 +14,8 @@ public class Creds {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -3,6 +3,7 @@ package com.example.intuitrepos.vm;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableField;
 
+import com.example.intuitrepos.dto.Creds;
 import com.example.intuitrepos.repository.IRepository;
 public
 class LoginViewModel extends ViewModel {

@@ -5,4 +5,5 @@ import android.os.Parcelable;
 public
 interface ISelectedItem {
     void selected(Parcelable item);
+    void notify(int position);
 }
