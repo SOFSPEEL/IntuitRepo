@@ -1,9 +1,6 @@
 package com.example.intuitrepos.di;
 
-import android.arch.lifecycle.ViewModelProvider;
-
-import com.example.intuitrepos.views.IssueDetailActivity;
-import com.example.intuitrepos.views.RepoDetailActivity;
+import com.example.intuitrepos.views.screens.IssueDetailActivity;
 
 import dagger.Component;
 

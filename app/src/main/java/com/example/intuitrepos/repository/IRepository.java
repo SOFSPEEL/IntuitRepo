@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.dto.Repo;
-import com.example.intuitrepos.dto.Creds;
+import com.example.intuitrepos.dto.Credentials;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface IRepository {
     void insert(Repo repo);
 
 
-    void saveCreds(String userName, String password);
+    void saveCredentials(String userName, String password);
 
-    Creds getCreds();
+    Credentials fetchCredentials();
 }

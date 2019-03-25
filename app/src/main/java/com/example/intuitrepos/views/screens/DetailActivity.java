@@ -1,4 +1,4 @@
-package com.example.intuitrepos.views;
+package com.example.intuitrepos.views.screens;
 
 import android.arch.lifecycle.ViewModel;
 import android.content.pm.ActivityInfo;
@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.intuitrepos.R;
 import com.example.intuitrepos.databinding.IssueDetailBinding;
+import com.example.intuitrepos.views.ActivityBase;
 
 public abstract class DetailActivity<TViewModel extends ViewModel, TBinding extends ViewDataBinding> extends ActivityBase<TViewModel> implements View.OnClickListener {
 

@@ -8,7 +8,7 @@ import com.example.intuitrepos.db.RepoDatabase;
 import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.dto.Repo;
 import com.example.intuitrepos.network.RepoService;
-import com.example.intuitrepos.dto.Creds;
+import com.example.intuitrepos.dto.Credentials;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -17,6 +17,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Repository pattern, network calls, database access, local storage
+ */
 public class Repository implements IRepository {
 
     public static final String KEY_USERNAME = "username";
@@ -111,16 +114,17 @@ public class Repository implements IRepository {
         });
     }
 
+    //todo: wouldn't use shared preferences for storing the password would use Android keychain
     @Override
-    public void saveCreds(String userName, String password) {
+    public void saveCredentials(String userName, String password) {
         prefs.edit().putString(KEY_USERNAME, userName).putString(KEY_PASSWORD, password).apply();
     }
 
     @Override
-    public Creds getCreds() {
+    public Credentials fetchCredentials() {
         String username = prefs.getString(KEY_USERNAME, "");
         String password = prefs.getString(KEY_PASSWORD, "");
-        return new Creds(username, password);
+        return new Credentials(username, password);
     }
 
     private void insertRepos(List<Repo> repos) {

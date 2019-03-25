@@ -1,4 +1,4 @@
-package com.example.intuitrepos.views;
+package com.example.intuitrepos;
 
 public class Constants {
     public static final String EXTRA_KEY_ITEM = "ITEM";

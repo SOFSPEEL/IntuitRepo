@@ -1,17 +1,18 @@
-package com.example.intuitrepos.views;
+package com.example.intuitrepos.views.adapters;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.intuitrepos.databinding.IssueRowBinding;
-import com.example.intuitrepos.databinding.RepoRowBinding;
 import com.example.intuitrepos.dto.Issue;
-import com.example.intuitrepos.dto.Repo;
+import com.example.intuitrepos.views.CallbackSelected;
+import com.example.intuitrepos.views.viewholder.IssueViewHolder;
+import com.example.intuitrepos.views.viewholder.ItemViewHolder;
 
 public class IssuesAdapter extends ItemsAdapter<Issue> {
-    public IssuesAdapter(ISelectedItem selectedItem) {
-        super(selectedItem);
+    public IssuesAdapter(CallbackSelected callbackSelected) {
+        super(callbackSelected);
     }
 
     @NonNull
@@ -19,7 +20,7 @@ public class IssuesAdapter extends ItemsAdapter<Issue> {
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         IssueRowBinding rowBinding = inflateBinding(viewGroup);
-        return new IssueViewHolder(rowBinding, selectedItem);
+        return new IssueViewHolder(rowBinding, callbackSelected);
     }
     @Override
     protected IssueRowBinding inflateBinding(@NonNull ViewGroup viewGroup) {

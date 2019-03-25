@@ -1,9 +1,11 @@
-package com.example.intuitrepos.views;
+package com.example.intuitrepos.views.screens;
 
 import com.example.intuitrepos.R;
 import com.example.intuitrepos.di.DaggerReposActivityComponent;
 import com.example.intuitrepos.di.ReposActivityComponent;
 import com.example.intuitrepos.di.ReposActivityModule;
+import com.example.intuitrepos.views.adapters.ItemsAdapter;
+import com.example.intuitrepos.views.adapters.ReposAdapter;
 import com.example.intuitrepos.vm.ReposViewModel;
 
 public class ReposActivity extends ItemsActivity {
@@ -19,6 +21,11 @@ public class ReposActivity extends ItemsActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.items;
+    }
+
+    @Override
+    protected String getTitleText() {
+        return getString(R.string.intuitRepos);
     }
 
     @Override

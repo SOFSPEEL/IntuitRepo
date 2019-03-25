@@ -5,8 +5,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.example.intuitrepos.repository.IRepository;
-import com.example.intuitrepos.views.ReposActivity;
-import com.example.intuitrepos.vm.LoginViewModel;
+import com.example.intuitrepos.views.screens.ReposActivity;
 import com.example.intuitrepos.vm.ReposViewModel;
 
 import dagger.Module;

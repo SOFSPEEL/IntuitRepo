@@ -5,10 +5,8 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.example.intuitrepos.repository.IRepository;
-import com.example.intuitrepos.views.RepoDetailActivity;
-import com.example.intuitrepos.views.RepoViewHolder;
+import com.example.intuitrepos.views.screens.RepoDetailActivity;
 import com.example.intuitrepos.vm.RepoViewModel;
-import com.example.intuitrepos.vm.ReposViewModel;
 
 import dagger.Module;
 import dagger.Provides;

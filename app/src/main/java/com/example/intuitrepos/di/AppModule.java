@@ -8,7 +8,7 @@ import com.example.intuitrepos.repository.IRepository;
 import com.example.intuitrepos.db.RepoDatabase;
 import com.example.intuitrepos.network.RepoService;
 import com.example.intuitrepos.repository.Repository;
-import com.example.intuitrepos.dto.Creds;
+import com.example.intuitrepos.dto.Credentials;
 
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -18,7 +18,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -66,8 +65,8 @@ public class AppModule {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
                 
-                Creds creds = repository.getRepository().getCreds();
-                String basic = Credentials.basic(creds.getUsername(), creds.getPassword());
+                Credentials credentials = repository.getRepository().fetchCredentials();
+                String basic = okhttp3.Credentials.basic(credentials.getUsername(), credentials.getPassword());
                 Request.Builder builder = originalRequest.newBuilder().header("Authorization",
                         basic);
 

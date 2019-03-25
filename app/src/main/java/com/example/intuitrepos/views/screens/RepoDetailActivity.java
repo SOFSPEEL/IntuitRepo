@@ -1,9 +1,10 @@
-package com.example.intuitrepos.views;
+package com.example.intuitrepos.views.screens;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.intuitrepos.Constants;
 import com.example.intuitrepos.R;
 import com.example.intuitrepos.databinding.RepoDetailBinding;
 import com.example.intuitrepos.di.DaggerRepoDetailActivityComponent;
@@ -14,6 +15,11 @@ import com.example.intuitrepos.vm.RepoViewModel;
 public class RepoDetailActivity extends DetailActivity<RepoViewModel, RepoDetailBinding> {
 
     private Repo repo;
+
+    @Override
+    protected String getTitleText() {
+        return getString(R.string.repoDetail);
+    }
 
     @Override
     protected void initializeViewModelFromParcelable(RepoViewModel viewModel) {

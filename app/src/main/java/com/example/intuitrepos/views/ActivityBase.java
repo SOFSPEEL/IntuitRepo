@@ -12,7 +12,7 @@ import com.example.intuitrepos.di.AppComponent;
 
 import javax.inject.Inject;
 
-abstract class ActivityBase<TViewModel extends ViewModel> extends AppCompatActivity {
+public abstract class ActivityBase<TViewModel extends ViewModel> extends AppCompatActivity {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -24,12 +24,17 @@ abstract class ActivityBase<TViewModel extends ViewModel> extends AppCompatActiv
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTitle(getTitleText());
+
         RepoApplication app = (RepoApplication) getApplication();
         appComponent = app.getAppComponent();
         inject();
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass());
         initializeViewModelFromParcelable(viewModel);
     }
+
+    protected abstract String getTitleText();
 
     protected void initializeViewModelFromParcelable(TViewModel viewModel) {
     }

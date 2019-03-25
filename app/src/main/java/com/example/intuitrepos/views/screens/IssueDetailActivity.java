@@ -1,16 +1,16 @@
-package com.example.intuitrepos.views;
+package com.example.intuitrepos.views.screens;
 
 import android.view.View;
 
+import com.example.intuitrepos.Constants;
 import com.example.intuitrepos.R;
 import com.example.intuitrepos.databinding.IssueDetailBinding;
 import com.example.intuitrepos.di.DaggerIssueDetailActivityComponent;
-import com.example.intuitrepos.di.IssueDetailActivityComponent;
 import com.example.intuitrepos.di.IssueDetailActivityModule;
 import com.example.intuitrepos.dto.Issue;
 import com.example.intuitrepos.vm.IssueViewModel;
 
-public class IssueDetailActivity extends DetailActivity<IssueViewModel, IssueDetailBinding>  {
+public class IssueDetailActivity extends DetailActivity<IssueViewModel, IssueDetailBinding> {
 
     @Override
     protected int getLayoutId() {
@@ -21,6 +21,11 @@ public class IssueDetailActivity extends DetailActivity<IssueViewModel, IssueDet
     protected void setupBinding(IssueDetailBinding binding) {
         binding.setListener(this);
         binding.setIssue(viewModel);
+    }
+
+    @Override
+    protected String getTitleText() {
+        return getString(R.string.issueDetail);
     }
 
     @Override

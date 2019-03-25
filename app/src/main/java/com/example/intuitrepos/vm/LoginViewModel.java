@@ -3,7 +3,7 @@ package com.example.intuitrepos.vm;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableField;
 
-import com.example.intuitrepos.dto.Creds;
+import com.example.intuitrepos.dto.Credentials;
 import com.example.intuitrepos.repository.IRepository;
 public
 class LoginViewModel extends ViewModel {
@@ -16,13 +16,13 @@ class LoginViewModel extends ViewModel {
     public LoginViewModel(IRepository repository) {
         this.repository = repository;
 
-        Creds creds = repository.getCreds();
-        username.set(creds.getUsername());
-        password.set(creds.getPassword());
+        Credentials credentials = repository.fetchCredentials();
+        username.set(credentials.getUsername());
+        password.set(credentials.getPassword());
     }
 
 
     public void saveCreds() {
-        repository.saveCreds(username.get(), password.get());
+        repository.saveCredentials(username.get(), password.get());
     }
 }

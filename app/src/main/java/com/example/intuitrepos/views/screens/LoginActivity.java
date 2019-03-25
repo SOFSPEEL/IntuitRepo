@@ -1,4 +1,4 @@
-package com.example.intuitrepos.views;
+package com.example.intuitrepos.views.screens;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import com.example.intuitrepos.databinding.LoginBinding;
 import com.example.intuitrepos.di.DaggerLoginActivityComponent;
 import com.example.intuitrepos.di.LoginActivityComponent;
 import com.example.intuitrepos.di.LoginActivityModule;
+import com.example.intuitrepos.views.ActivityBase;
 import com.example.intuitrepos.vm.LoginViewModel;
 
 import javax.inject.Inject;
@@ -25,9 +26,15 @@ public class LoginActivity extends ActivityBase<LoginViewModel> implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         LoginBinding binding = DataBindingUtil.setContentView(this, R.layout.login);
         binding.setListener(this);
         binding.setLogin(viewModel);
+    }
+
+    @Override
+    protected String getTitleText() {
+        return getString(R.string.loginTitle);
     }
 
     @Override
