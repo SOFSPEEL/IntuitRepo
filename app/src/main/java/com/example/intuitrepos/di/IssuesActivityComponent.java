@@ -4,7 +4,7 @@ import com.example.intuitrepos.views.screens.IssuesActivity;
 
 import dagger.Component;
 
-@Singleton2
+@ActivityScope
 @Component(modules = {IssuesActivityModule.class}, dependencies = {AppComponent.class})
 
 public interface IssuesActivityComponent extends IFactory {

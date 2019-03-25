@@ -4,7 +4,7 @@ import com.example.intuitrepos.views.screens.RepoDetailActivity;
 
 import dagger.Component;
 
-@Singleton2
+@ActivityScope
 @Component(modules = {RepoDetailActivityModule.class}, dependencies = {AppComponent.class})
 
 public interface RepoDetailActivityComponent extends IFactory{

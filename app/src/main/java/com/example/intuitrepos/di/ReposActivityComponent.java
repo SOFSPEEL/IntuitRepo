@@ -4,7 +4,7 @@ import com.example.intuitrepos.views.screens.ReposActivity;
 
 import dagger.Component;
 
-@Singleton2
+@ActivityScope
 @Component(modules = {ReposActivityModule.class}, dependencies = {AppComponent.class})
 
 public interface ReposActivityComponent extends IFactory{
