@@ -11,7 +11,6 @@ public class RepoViewModel extends ViewModel {
 
     private Repo repo;
 
-
     public void setRepo(Repo repo){
         this.repo = repo;
     }

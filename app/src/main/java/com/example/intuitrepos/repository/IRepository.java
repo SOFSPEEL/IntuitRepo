@@ -9,14 +9,19 @@ import com.example.intuitrepos.dto.Credentials;
 import java.util.List;
 
 public interface IRepository {
-    LiveData<List<Repo>> fetchRepos();
+    void fetchRepos();
 
-    LiveData<List<Issue>> fetchIssues(int repoId, String repoName, int count);
+    void fetchIssues(int repoId, String repoName, int count);
 
-    void insert(Repo repo);
+    LiveData<List<Repo>> getRepos();
 
+    LiveData<List<Issue>> getIssues(int repoId);
 
     void saveCredentials(String userName, String password);
 
     Credentials fetchCredentials();
+
+    LiveData<String> getReposError();
+
+    LiveData<String> getIssuesError();
 }

@@ -1,6 +1,7 @@
 package com.example.intuitrepos.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.SharedPreferences;
 
 import com.example.intuitrepos.db.RepoDao;
@@ -30,7 +31,8 @@ public class Repository implements IRepository {
     private RepoService repoService;
 
     private Executor executor;
-
+    private MutableLiveData<String> reposError = new MutableLiveData<>();
+    private MutableLiveData<String> issuesError = new MutableLiveData<>();
 
     public Repository(RepoService repoService, RepoDatabase repoDatabase, Executor executor, SharedPreferences preferences) {
 
@@ -42,40 +44,45 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public LiveData<List<Repo>> fetchRepos() {
+    public void fetchRepos() {
 
         fetchAndInsertRepos();
-        return repoDao.fetchAllRepos();
     }
 
     @Override
-    public LiveData<List<Issue>> fetchIssues(int repoId, String repoName, int count) {
+    public void fetchIssues(int repoId, String repoName, int count) {
 
         for (int i = 1; i <= count; i++) {
             fetchIssue(repoId, repoName, i);
         }
+    }
 
+    @Override
+    public LiveData<List<Repo>> getRepos() {
+        return repoDao.fetchAllRepos();
+    }
+
+    @Override
+    public LiveData<List<Issue>> getIssues(int repoId) {
         return repoDao.fetchAllIssues(repoId);
     }
 
     private void fetchIssue(int repoId, String repoName, int i) {
-        executor.execute(() -> {
-            repoService.getIssue(repoName, i).enqueue(new Callback<Issue>() {
-                @Override
-                public void onResponse(Call<Issue> call, Response<Issue> response) {
-                    if (response.isSuccessful()) {
-                        Issue issue = response.body();
-                        issue.repoId = repoId;
-                        insertIssue(issue);
-                    }
+        executor.execute(() -> repoService.getIssue(repoName, i).enqueue(new Callback<Issue>() {
+            @Override
+            public void onResponse(Call<Issue> call, Response<Issue> response) {
+                if (response.isSuccessful()) {
+                    Issue issue = response.body();
+                    issue.repoId = repoId;
+                    insertIssue(issue);
                 }
+            }
 
-                @Override
-                public void onFailure(Call<Issue> call, Throwable t) {
-
-                }
-            });
-        });
+            @Override
+            public void onFailure(Call<Issue> call, Throwable t) {
+                issuesError.setValue("Failed to fetch issue: " + i);
+            }
+        }));
     }
 
     private void insertIssue(Issue issue) {
@@ -86,33 +93,22 @@ public class Repository implements IRepository {
 
     public void fetchAndInsertRepos() {
 
-        executor.execute(() -> {
-
-            repoService.getRepos().enqueue(new Callback<List<Repo>>() {
-                @Override
-                public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
-                    List<Repo> repos = response.body();
-                    if (response.isSuccessful()) {
-                        insertRepos(repos);
-                    }
-
+        executor.execute(() -> repoService.getRepos().enqueue(new Callback<List<Repo>>() {
+            @Override
+            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
+                List<Repo> repos = response.body();
+                if (response.isSuccessful()) {
+                    insertRepos(repos);
                 }
+            }
 
-                @Override
-                public void onFailure(Call<List<Repo>> call, Throwable t) {
-
-                }
-            });
-        });
+            @Override
+            public void onFailure(Call<List<Repo>> call, Throwable t) {
+                reposError.setValue("Failed Fetch");
+            }
+        }));
     }
 
-
-    @Override
-    public void insert(Repo repo) {
-        executor.execute(() -> {
-            repoDao.insert(repo);
-        });
-    }
 
     //todo: wouldn't use shared preferences for storing the password would use Android keychain
     @Override
@@ -125,6 +121,16 @@ public class Repository implements IRepository {
         String username = prefs.getString(KEY_USERNAME, "");
         String password = prefs.getString(KEY_PASSWORD, "");
         return new Credentials(username, password);
+    }
+
+    @Override
+    public LiveData<String> getReposError() {
+        return reposError;
+    }
+
+    @Override
+    public LiveData<String> getIssuesError() {
+        return issuesError;
     }
 
     private void insertRepos(List<Repo> repos) {

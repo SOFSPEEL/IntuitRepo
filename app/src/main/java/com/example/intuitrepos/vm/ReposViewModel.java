@@ -1,7 +1,11 @@
 package com.example.intuitrepos.vm;
 
+import android.arch.lifecycle.LiveData;
+
 import com.example.intuitrepos.repository.IRepository;
 import com.example.intuitrepos.dto.Repo;
+
+import java.util.List;
 
 public class ReposViewModel extends ItemsViewModel<Repo> {
 
@@ -10,8 +14,18 @@ public class ReposViewModel extends ItemsViewModel<Repo> {
     }
 
     @Override
+    public LiveData<String> getError() {
+        return repository.getReposError();
+    }
+
+    @Override
     public void fetch() {
 
-        items = repository.fetchRepos();
+        repository.fetchRepos();
+    }
+
+    @Override
+    public LiveData<List<Repo>> getItems() {
+        return repository.getRepos();
     }
 }
